@@ -5,11 +5,13 @@ import { loadSVG } from './modules/loadSVG.js';
 import { dragAndDrop } from './modules/dragAndDrop.js';
 import { materialManager } from './modules/materialManager.js';
 
+// goto modules/curveToRibbon to adjust settings for texture size.
+// Uncomment the loadPaper line below to see the paper texture.
 
 Promise.all([
   loadLights(),
-  loadPaper('paper'),
-  loadSVG('fifty.svg', 'crosswalk.mp4'),
+  // loadPaper('paper'),
+  loadSVG('50.svg', 'wise.mp4'),
   dragAndDrop()
 ]).then(() => {
   animate();

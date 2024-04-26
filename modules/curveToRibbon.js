@@ -2,6 +2,11 @@ import * as THREE from "three"
 import { loadVideo } from './loadVideo.js'
 import { materialManager } from './materialManager.js';
 
+// perlin noise generation library
+import { createNoise2D } from 'simplex-noise';
+const noise2D = createNoise2D();
+
+
 // given a CatmullRomCurve3 object, 
 // create a plane geometry and modify it 
 // so as to describe a ribbon that follows the curve
@@ -15,12 +20,25 @@ const curveToRibbon = (curve, videoPath) => {
   // curve.closed = true;    
 
   // the longer the curve, the more points we need to draw
-  let number = parseInt(curve.getLength() * 10)
+  // lower number  = les points = less memory
+  // try a range from 5 to 20
+  let number = parseInt(curve.getLength() * 20)
 
   let biNormals = curve.computeFrenetFrames(number, true).binormals
-  let spacedPoints = curve.getSpacedPoints(number)
+
+  let rawSpacedPoints = curve.getSpacedPoints(number);
+  let spacedPoints = rawSpacedPoints.map((point) => {
+    // Perlin noise value for z-coordinate
+    let zNoise = noise2D(point.x * 0.01, point.y * 0.01); // Scale noise to [-1, 1]
+    return new THREE.Vector3(point.x, point.y, zNoise);
+  })
+
+
+  // let spacedPoints = curve.getSpacedPoints(number)
+  console.log(spacedPoints)
   let ribbonPoints = []
-  let dimensions = [-3, 3]
+  let dimensions = [-8, 8]
+
   dimensions.forEach(d => {
     for (let i = 0; i <= number; i++) {
       let startingPoint = new THREE.Vector3().copy(spacedPoints[i])
@@ -38,7 +56,9 @@ const curveToRibbon = (curve, videoPath) => {
   texture.wrapS = THREE.RepeatWrapping; // U - horizontal wrapping 
   // Longer curve => more repetition of textures
   // We ought to do some mapping here to ensure a 1:1 proportion
-  texture.repeat.set(curve.getLength() * 0.02, 1);
+  // A larger number will make the texture smaller
+  // A smaller number will make the texture larger
+  texture.repeat.set(curve.getLength() * 0.01, 1);
   // texture.encoding = THREE.sRGBEncoding; // deprecated
   texture.colorSpace = THREE.SRGBColorSpace; // for accurate color representation 
   let material = new THREE.MeshStandardMaterial({

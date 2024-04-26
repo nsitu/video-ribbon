@@ -27,7 +27,7 @@ jobs:
           command: c      # "c" means "create" (new tarball)
           cwd: "./"  
           files: |
-            dist/
+            dist/*
             Dockerfile
             captain-definition    
           outPath: deploy.tar

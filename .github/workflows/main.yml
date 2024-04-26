@@ -27,9 +27,9 @@ jobs:
           command: c      # "c" means "create" (new tarball)
           cwd: "./"  
           files: |
-            dist/*
-            Dockerfile
-            captain-definition    
+            ./dist/*
+            ./Dockerfile
+            ./captain-definition    
           outPath: deploy.tar
       # Deploy the tarball to CapRover, using the CapRover GitHub Action
       # Make sure you add CapRover Secrets to Repository Settings 

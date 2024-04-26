@@ -8,11 +8,22 @@ jobs:
     runs-on: ubuntu-latest 
 
     steps:
-      - uses: actions/checkout@v3 
+      - uses: actions/checkout@v4 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies  # see also, package.json
+        run: npm install
+
+      - name: Build with Vite
+        run: npm run build    # i.e. "vite build"
+
       - uses: a7ul/tar-action@v1.1.3
         with:
-          command: c    # "c" means "create" (new tarball)
-          cwd: "./"
+          command: c      # "c" means "create" (new tarball)
+          cwd: "./dist"   # vite builds the frontend in the "dist" folder
           files: |
             ./
           outPath: deploy.tar

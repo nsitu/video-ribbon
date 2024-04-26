@@ -20,6 +20,9 @@ jobs:
       - name: Build with Vite
         run: npm run build    # i.e. "vite build"
 
+      - name: Include Dockerfile and CapRover configuration
+        run: cp Dockerfile dist/ && cp captain-definition dist/
+
       # Make a tarball of the dist/ folder for deployment
       # and also include the Dockerfile and CapRover configuration
       - uses: a7ul/tar-action@v1.2.0
@@ -27,9 +30,7 @@ jobs:
           command: c      # "c" means "create" (new tarball)
           cwd: "./dist"  
           files: |
-            ./
-            ../Dockerfile
-            ../captain-definition    
+            ./ 
           outPath: deploy.tar
       # Deploy the tarball to CapRover, using the CapRover GitHub Action
       # Make sure you add CapRover Secrets to Repository Settings 

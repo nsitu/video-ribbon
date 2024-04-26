@@ -22,14 +22,14 @@ jobs:
 
       # Make a tarball of the dist/ folder for deployment
       # and also include the Dockerfile and CapRover configuration
-      - uses: a7ul/tar-action@v1.1.3
+      - uses: a7ul/tar-action@v1.2.0
         with:
           command: c      # "c" means "create" (new tarball)
-          cwd: "./"  
+          cwd: "./dist"  
           files: |
-            dist/*
-            Dockerfile
-            captain-definition    
+            ./
+            ../Dockerfile
+            ../captain-definition    
           outPath: deploy.tar
       # Deploy the tarball to CapRover, using the CapRover GitHub Action
       # Make sure you add CapRover Secrets to Repository Settings 

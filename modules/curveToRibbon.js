@@ -58,7 +58,7 @@ const curveToRibbon = (curve, videoPath) => {
   // We ought to do some mapping here to ensure a 1:1 proportion
   // A larger number will make the texture smaller
   // A smaller number will make the texture larger
-  texture.repeat.set(curve.getLength() * 0.001, 1);
+  texture.repeat.set(curve.getLength() * 0.01, 1);
   // texture.encoding = THREE.sRGBEncoding; // deprecated
   texture.colorSpace = THREE.SRGBColorSpace; // for accurate color representation 
   let material = new THREE.MeshStandardMaterial({

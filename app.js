@@ -11,7 +11,7 @@ import { materialManager } from './modules/materialManager.js';
 Promise.all([
   loadLights(),
   // loadPaper('paper'),
-  loadSVG('50.svg', 'wise.mp4'),
+  loadSVG('50.svg', '512.mp4'),
   dragAndDrop()
 ]).then(() => {
   animate();

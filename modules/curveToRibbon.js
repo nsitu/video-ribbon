@@ -22,7 +22,7 @@ const curveToRibbon = (curve, videoPath) => {
   // the longer the curve, the more points we need to draw
   // lower number  = les points = less memory
   // try a range from 5 to 20
-  let number = parseInt(curve.getLength() * 5)
+  let number = parseInt(curve.getLength() * 15)
 
   let biNormals = curve.computeFrenetFrames(number, true).binormals
 
